@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Platform
 } from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, { Marker, Callout } from 'react-native-maps';
 // import console = require('console');
 
 export default class MapScreen extends PureComponent {
@@ -37,16 +37,24 @@ export default class MapScreen extends PureComponent {
               }}
               onLongPress={this.onHandlerMarkerShow}
             >
-              {!!showMarker && <Marker
-                onPress={() => {}}
-                coordinate={{
-                  latitude: 50.4020865,
-                  longitude: 30.61468031,
-                }}
-                centerOffset={{ x: -18, y: -60 }}
-                anchor={{ x: 0.69, y: 1 }}
-                pinColor={'tomato'}
-              />}
+              {!!showMarker && 
+                <Marker
+                  onPress={() => {}}
+                  coordinate={{
+                    latitude: 50.4020865,
+                    longitude: 30.61468031,
+                  }}
+                  centerOffset={{ x: -18, y: -60 }}
+                  anchor={{ x: 0.69, y: 1 }}
+                  pinColor={'tomato'}
+                >
+                  <Callout style={styles.plainView}>
+                    <View>
+                      <Text>This is a plain view</Text>
+                    </View>
+                  </Callout>
+                </Marker>
+              }
             </MapView>
         }
       </View>
@@ -70,5 +78,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  plainView: {
+    width: 'auto',
+    padding: 10,
   },
 });
