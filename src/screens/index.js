@@ -1,1 +1,2 @@
-export { default as TabNavigator } from './TabNavigator';
+export { default as MapScreen } from './MapScreen';
+export { default as SearchScreen } from './SearchScreen';

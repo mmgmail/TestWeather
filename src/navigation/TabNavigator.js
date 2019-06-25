@@ -1,33 +1,8 @@
-import React, { PureComponent } from 'react';
-import { View, Text } from 'react-native';
 import {
   createBottomTabNavigator,
   createStackNavigator,
-  NavigationScreenProp,
-  NavigationState,
-  SafeAreaView,
-  ScrollView,
 } from 'react-navigation';
-
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Button } from 'react-native-elements';
-
-class MyNavScreen extends PureComponent {
-  render() {
-    const { navigation } = this.props;
-    const banner = navigation.getParam('banner');
-
-    return (
-      <View style={{ flex: 1 }}>
-        <SafeAreaView forceInset={{ horizontal: 'always' }}>
-          <Text>{banner}</Text>
-        </SafeAreaView>
-      </View>
-    );
-  }
-}
-
-const TabBarComponent = (props) => (<BottomTabBar {...props} />);
+import { MapScreen, SearchScreen } from 'AppScreens';
 
 const MapTab = createStackNavigator({
   Home: {
@@ -36,7 +11,7 @@ const MapTab = createStackNavigator({
     },
     params: { banner: 'Map Screen' },
     path: '/',
-    screen: MyNavScreen,
+    screen: MapScreen,
   }
 });
 
@@ -46,7 +21,7 @@ const SearchTab = createStackNavigator({
       title: 'Search',
     },
     params: { banner: 'Search Screen' },
-    screen: MyNavScreen,
+    screen: SearchScreen,
   },
 });
 
@@ -86,4 +61,6 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 
-export default TabNavigator;
+export {
+  TabNavigator
+}
