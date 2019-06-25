@@ -10,15 +10,6 @@ buildscript {
         googlePlayServicesVersion = "16.1.0" // or set latest version
         androidMapsUtilsVersion = "0.5+"
     }
-    // ext {
-    //     compileSdkVersion   = 26
-    //     targetSdkVersion    = 26
-    //     minSdkVersion = 16
-    //     buildToolsVersion   = "26.0.2"
-    //     supportLibVersion   = "26.1.0"
-    //     googlePlayServicesVersion = "16.1.0" // or set latest version
-    //     androidMapsUtilsVersion = "0.5+"
-    // }
     repositories {
         google()
         jcenter()
