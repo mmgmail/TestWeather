@@ -6,12 +6,21 @@ import {
   Platform
 } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
-// import console = require('console');
+import { Api } from 'AppApi';
+
+const { getWeather } = Api;
 
 export default class MapScreen extends PureComponent {
   
-  state = {
-    showMarker: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      showMarker: false
+    }
+
+    getWeather().then(
+      res => this.response = res
+    );
   }
 
   onHandlerMarkerShow = () => {
@@ -50,7 +59,8 @@ export default class MapScreen extends PureComponent {
                 >
                   <Callout style={styles.plainView}>
                     <View>
-                      <Text>This is a plain view</Text>
+                      <Text>{ `${this.response.name}, ${Math.floor(this.response.main.temp)}°C` }</Text>
+                      <Text>{ this.response.weather[0].description }</Text>
                     </View>
                   </Callout>
                 </Marker>
