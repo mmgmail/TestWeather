@@ -24,7 +24,14 @@ export default class MapScreen extends PureComponent {
   }
 
   onHandlerMarkerShow = () => {
-    this.setState({ showMarker: true })
+    this.setState({ showMarker: true });
+    setTimeout(() => {
+      this.marker.showCallout();
+    }, 10);
+  }
+
+  onHandlerMarkerHide = () => {
+    this.setState({ showMarker: true });
   }
 
   render() {
@@ -48,7 +55,7 @@ export default class MapScreen extends PureComponent {
             >
               {!!showMarker && 
                 <Marker
-                  onPress={() => {}}
+                  ref={ref => this.marker = ref}
                   coordinate={{
                     latitude: 50.4020865,
                     longitude: 30.61468031,
@@ -56,6 +63,7 @@ export default class MapScreen extends PureComponent {
                   centerOffset={{ x: -18, y: -60 }}
                   anchor={{ x: 0.69, y: 1 }}
                   pinColor={'tomato'}
+                  calloutVisible={true}
                 >
                   <Callout style={styles.plainView}>
                     <View>
