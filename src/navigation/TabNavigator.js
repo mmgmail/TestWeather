@@ -38,7 +38,7 @@ const TabNavigator = createBottomTabNavigator(
       screen: SearchTab,
       path: '/search',
       navigationOptions: {
-        tabBarLabel: 'Search',
+        tabBarLabel: 'Search'
       },
     },
   },

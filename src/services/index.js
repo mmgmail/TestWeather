@@ -1,6 +1,5 @@
 
 const WEATHER_API = 'http://api.openweathermap.org/data/2.5/weather?q=';
-const DEFAULT_CITY = 'Kyiv,';
 const PARAMS = '&units=metric&lang=ua&'
 const API_KEY = 'appid=063c51f5bd4cc4f176c67724ff4cd230';
 

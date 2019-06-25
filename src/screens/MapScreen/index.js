@@ -17,15 +17,12 @@ export default class MapScreen extends PureComponent {
     this.state = {
       showMarker: false
     }
-
-    getWeather().then(
-      res => this.response = res
-    );
   }
 
-  onHandlerMarkerShow = () => {
-    this.setState({ showMarker: true });
-    setTimeout(() => {
+  onHandlerMarkerShow = async () => {
+    await getWeather().then(res => this.response = res);
+    await this.setState({ showMarker: true });
+    await setTimeout(() => {
       this.marker.showCallout();
     }, 10);
   }
