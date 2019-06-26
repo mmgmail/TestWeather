@@ -5,6 +5,9 @@ import {
   StyleSheet,
   Platform
 } from 'react-native';
+import {
+  navigation,
+} from 'react-navigation';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { Api } from 'AppApi';
 
@@ -15,7 +18,17 @@ export default class MapScreen extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      showMarker: false
+      showMarker: false,
+      region: {
+        latitude: 50.4020865,
+        longitude: 30.61468031,
+      }
+    }
+  }
+
+  componentDidUpdate(nextProps) {
+    if(nextProps.navigation.getParam('region') !== this.state.region) {
+      // console.log(nextProps.navigation.getParam('region'))
     }
   }
 
@@ -32,9 +45,10 @@ export default class MapScreen extends PureComponent {
   }
 
   render() {
-    // const { navigation } = this.props;
-
-    const { showMarker } = this.state;
+    const { navigation } = this.props;
+    const { showMarker, region } = this.state;
+    const { latitude, longitude } = region;
+    console.log(navigation.state.params);
 
     return (
       <View style={{ flex: 1 }}>
@@ -43,8 +57,8 @@ export default class MapScreen extends PureComponent {
           : <MapView
               style={styles.map}
               initialRegion={{
-                latitude: 50.4020865,
-                longitude: 30.61468031,
+                latitude,
+                longitude,
                 latitudeDelta: 1,
                 longitudeDelta: 1,
               }}
@@ -54,8 +68,8 @@ export default class MapScreen extends PureComponent {
                 <Marker
                   ref={ref => this.marker = ref}
                   coordinate={{
-                    latitude: 50.4020865,
-                    longitude: 30.61468031,
+                    latitude,
+                    longitude
                   }}
                   centerOffset={{ x: -18, y: -60 }}
                   anchor={{ x: 0.69, y: 1 }}

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   createBottomTabNavigator,
   createStackNavigator,
@@ -9,9 +10,12 @@ const MapTab = createStackNavigator({
     navigationOptions: {
       title: 'Map',
     },
-    params: { banner: 'Map Screen' },
+    params: { 
+      banner: 'Map Screen',
+      region: {}
+    },
     path: '/',
-    screen: MapScreen,
+    screen: props => <MapScreen {...props} />,
   }
 });
 
@@ -32,7 +36,7 @@ const TabNavigator = createBottomTabNavigator(
         tabBarLabel: 'Home',
       },
       path: '/',
-      screen: MapTab,
+      screen: MapTab
     },
     SearchTab: {
       screen: SearchTab,
