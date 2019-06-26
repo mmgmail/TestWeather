@@ -16,7 +16,7 @@ const MapTab = createStackNavigator({
 });
 
 const SearchTab = createStackNavigator({
-  Settings: {
+  Search: {
     navigationOptions: {
       title: 'Search Weather',
     },

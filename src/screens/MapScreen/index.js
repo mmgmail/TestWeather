@@ -66,7 +66,9 @@ export default class MapScreen extends PureComponent {
                   anchor={{ x: 0.69, y: 1 }}
                   pinColor={'tomato'}
                 >
-                  <Callout style={styles.plainView}>
+                  <Callout style={styles.plainView}
+                    onPress={() => navigation.navigate('Search')}
+                  >
                     <View>
                       <Text>{ `${this.response.name}, ${Math.floor(this.response.main.temp)}°C` }</Text>
                       <Text>{ this.response.weather[0].description }</Text>
