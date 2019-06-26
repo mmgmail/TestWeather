@@ -5,12 +5,13 @@ import {
   StyleSheet,
   ScrollView,
   ActivityIndicator,
-  Keyboard
+  Alert
 } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { ListItem } from 'react-native-elements'
 import { Api } from 'AppApi';
-const { getWeatherHourly } = Api;
+
+const { getWeatherHourly, getWeatherHourlyByCoord } = Api;
 
 export default class SearchScreen extends PureComponent {
   
@@ -20,12 +21,15 @@ export default class SearchScreen extends PureComponent {
   };
 
   async componentDidMount() {
-    await getWeatherHourly().then(res => this.setState({ responseData: res }));
-    await this.setState({ isLoading: false });
-  }
-
-  onChangeLocation(region) {
-    
+    await getWeatherHourly()
+      .then(res => {
+        if(res) {
+          this.setState({ responseData: res });
+          this.setState({ isLoading: false });
+        } else {
+          Alert.alert('Somthing went wrong!');
+        }
+      });
   }
 
   render() {
@@ -42,8 +46,19 @@ export default class SearchScreen extends PureComponent {
             listViewDisplayed={false}
             fetchDetails={true}
             getDefaultValue={() => 'Kyiv'}
-            onPress={(data, details = null) => {
-                this.onChangeLocation(details.geometry);
+            onPress={async (data, details = null) => {
+                const lat = Math.floor(details.geometry.location.lat);
+                const lon = Math.floor(details.geometry.location.lng);
+                await this.setState({ isLoading: true });
+                await getWeatherHourlyByCoord(lat, lon)
+                  .then(res => {
+                    if(res) {
+                      this.setState({ responseData: res });
+                      this.setState({ isLoading: false });
+                    } else {
+                      Alert.alert('Somthing went wrong!');
+                    }
+                  });
               }
             }
             query={{
