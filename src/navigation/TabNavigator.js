@@ -18,9 +18,9 @@ const MapTab = createStackNavigator({
 const SearchTab = createStackNavigator({
   Settings: {
     navigationOptions: {
-      title: 'Search',
+      title: 'Search Weather',
     },
-    params: { banner: 'Search Screen' },
+    params: { banner: 'Search Weather Screen' },
     screen: SearchScreen,
   },
 });
@@ -29,7 +29,7 @@ const TabNavigator = createBottomTabNavigator(
   {
     MapTab: {
       navigationOptions: {
-        tabBarLabel: 'Home',
+        tabBarLabel: 'Map',
       },
       path: '/',
       screen: MapTab,
@@ -38,7 +38,7 @@ const TabNavigator = createBottomTabNavigator(
       screen: SearchTab,
       path: '/search',
       navigationOptions: {
-        tabBarLabel: 'Search'
+        tabBarLabel: 'Search Weather'
       },
     },
   },
