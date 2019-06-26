@@ -6,7 +6,7 @@ import {
   Platform,
   Image
 } from 'react-native';
-import MapView, { Marker, Callout } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 import { Api } from 'AppApi';
 
 const { getWeather } = Api;
@@ -43,44 +43,42 @@ export default class MapScreen extends PureComponent {
     
     return (
       <View style={{ flex: 1 }}>
-        {
-          Platform.OS === 'ios' ? null
-          : <MapView
-              style={styles.map}
-              initialRegion={{
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          style={styles.map}
+          initialRegion={{
+            latitude,
+            longitude,
+            latitudeDelta: 1,
+            longitudeDelta: 1,
+          }}
+          onLongPress={this.onHandlerMarkerShow}
+          onPress={this.onHandlerMarkerHide}
+        >
+          {!!showMarker && 
+            <Marker
+              ref={ref => this.marker = ref}
+              coordinate={{
                 latitude,
-                longitude,
-                latitudeDelta: 1,
-                longitudeDelta: 1,
+                longitude
               }}
-              onLongPress={this.onHandlerMarkerShow}
-              onPress={this.onHandlerMarkerHide}
+              centerOffset={{ x: -18, y: -60 }}
+              anchor={{ x: 0.69, y: 1 }}
+              pinColor={'tomato'}
             >
-              {!!showMarker && 
-                <Marker
-                  ref={ref => this.marker = ref}
-                  coordinate={{
-                    latitude,
-                    longitude
-                  }}
-                  centerOffset={{ x: -18, y: -60 }}
-                  anchor={{ x: 0.69, y: 1 }}
-                  pinColor={'tomato'}
-                >
-                  <Callout style={styles.plainView}
-                    onPress={() => {
-                      this.onHandlerMarkerHide()
-                      navigation.navigate('Search')}}
-                  >
-                    <View>
-                      <Text>{ `${this.response.name}, ${Math.floor(this.response.main.temp)}°C` }</Text>
-                      <Text>{ this.response.weather[0].description }</Text>
-                    </View>
-                  </Callout>
-                </Marker>
-              }
-            </MapView>
-        }
+              <Callout style={styles.plainView}
+                onPress={() => {
+                  this.onHandlerMarkerHide()
+                  navigation.navigate('Search')}}
+              >
+                <View>
+                  <Text>{ `${this.response.name}, ${Math.floor(this.response.main.temp)}°C` }</Text>
+                  <Text>{ this.response.weather[0].description }</Text>
+                </View>
+              </Callout>
+            </Marker>
+          }
+        </MapView>
       </View>
     );
   }
