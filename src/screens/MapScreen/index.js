@@ -33,7 +33,7 @@ export default class MapScreen extends PureComponent {
   }
 
   onHandlerMarkerHide = () => {
-    this.setState({ showMarker: true });
+    this.setState({ showMarker: false });
   }
 
   render() {
@@ -54,6 +54,7 @@ export default class MapScreen extends PureComponent {
                 longitudeDelta: 1,
               }}
               onLongPress={this.onHandlerMarkerShow}
+              onPress={this.onHandlerMarkerHide}
             >
               {!!showMarker && 
                 <Marker
@@ -67,7 +68,9 @@ export default class MapScreen extends PureComponent {
                   pinColor={'tomato'}
                 >
                   <Callout style={styles.plainView}
-                    onPress={() => navigation.navigate('Search')}
+                    onPress={() => {
+                      this.onHandlerMarkerHide()
+                      navigation.navigate('Search')}}
                   >
                     <View>
                       <Text>{ `${this.response.name}, ${Math.floor(this.response.main.temp)}°C` }</Text>
