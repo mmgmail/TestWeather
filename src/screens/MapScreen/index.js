@@ -3,11 +3,9 @@ import {
   Text,
   View,
   StyleSheet,
-  Platform
+  Platform,
+  Image
 } from 'react-native';
-import {
-  navigation,
-} from 'react-navigation';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { Api } from 'AppApi';
 
@@ -30,6 +28,7 @@ export default class MapScreen extends PureComponent {
     await getWeather().then(res => this.response = res);
     await this.setState({ showMarker: true });
     await setTimeout(() => {
+      console.log(this.response);
       this.marker.showCallout();
     }, 10);
   }
@@ -42,8 +41,7 @@ export default class MapScreen extends PureComponent {
     const { navigation } = this.props;
     const { showMarker, region } = this.state;
     const { latitude, longitude } = region;
-    console.log(navigation.state.params);
-
+    
     return (
       <View style={{ flex: 1 }}>
         {
@@ -68,7 +66,6 @@ export default class MapScreen extends PureComponent {
                   centerOffset={{ x: -18, y: -60 }}
                   anchor={{ x: 0.69, y: 1 }}
                   pinColor={'tomato'}
-                  calloutVisible={true}
                 >
                   <Callout style={styles.plainView}>
                     <View>

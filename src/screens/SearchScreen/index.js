@@ -3,91 +3,95 @@ import {
   Text,
   View,
   StyleSheet,
-  ScrollView
+  ScrollView,
+  ActivityIndicator,
+  Keyboard
 } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { ListItem } from 'react-native-elements'
 import { Api } from 'AppApi';
 const { getWeatherHourly } = Api;
 
 export default class SearchScreen extends PureComponent {
   
   state = {
-    region: {
-      latitude: 50.4020865,
-      longitude: 30.61468031,
-    }
+    isLoading: true,
+    responseData: null
   };
 
   async componentDidMount() {
-    await getWeatherHourly().then(res => this.response = res);
-    await console.log(this.response)
-  }
-
-  getCurrentLocation = () => {
-    return new Promise(
-        (resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(
-            (data) => resolve(data.coords),
-            (err) => reject(err)
-          );
-        }
-    );
-  }
-
-  updateLocation(location) {
-    this.setState({
-      region: {
-        latitude: location.latitude,
-        longitude: location.longitude,
-        latitudeDelta: 0.003,
-        longitudeDelta: 0.003,
-      },
-    });
+    await getWeatherHourly().then(res => this.setState({ responseData: res }));
+    await this.setState({ isLoading: false });
   }
 
   onChangeLocation(region) {
-    this.setState({ region });
     
   }
 
   render() {
-    const { navigation } = this.props;
-    const banner = navigation.getParam('banner');
-    return (
-      <View style={{ flex: 1 }}>
-        <GooglePlacesAutocomplete
-          placeholder='Search'
-          minLength={2}
-          autoFocus={false}
-          autoFocus={true}
-          returnKeyType={'search'} 
-          listViewDisplayed={false}
-          fetchDetails={true}
-          onPress={(data, details = null) => {
-              this.onChangeLocation(details.geometry.location);
-            }
-          }
-          query={{
-            key: 'AIzaSyCpTnZOCTTjid_Rej39OI9FsE2_LcMdPg8',
-            language: 'en',
-            types: '(cities)'
-          }}
-          debounce={200}
-        />
-        <ScrollView>
+    const { isLoading, responseData } = this.state;
 
-        </ScrollView>
+    return (
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <GooglePlacesAutocomplete
+            placeholder='Search'
+            minLength={2}
+            autoFocus={false}
+            returnKeyType={'search'} 
+            listViewDisplayed={false}
+            fetchDetails={true}
+            getDefaultValue={() => 'Kyiv'}
+            onPress={(data, details = null) => {
+                this.onChangeLocation(details.geometry);
+              }
+            }
+            query={{
+              key: 'AIzaSyCpTnZOCTTjid_Rej39OI9FsE2_LcMdPg8',
+              language: 'en',
+              types: '(cities)'
+            }}
+            debounce={200}
+            styles={{
+              row: {
+                backgroundColor: 'white'
+              }
+            }}
+          />
+        </View>
+        <View style={styles.list}>
+          {isLoading ? <ActivityIndicator />
+            : <ScrollView>
+                {
+                  responseData.list.map((item, i) => (
+                    <ListItem
+                      key={item.dt}
+                      title={item.dt_txt}
+                      leftAvatar={{ source: { uri: `http://openweathermap.org/img/w/${item.weather[0].icon}.png` } }}
+                      rightElement={<Text>{`${Math.floor(item.main.temp)}°C`}</Text>}
+                    />
+                  ))
+                }
+              </ScrollView>
+          }
+        </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  header: {
-    flexDirection: 'row'
+  container: {
+    flex: 1
   },
-  searchInput: {
+  list: {
+    paddingTop: 45
+  },
+  header: {
     position: 'absolute',
-    width: '100%'
+    width: '100%',
+    top: 0,
+    left: 0, right: 0,
+    zIndex: 1
   }
 });
