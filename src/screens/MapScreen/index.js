@@ -26,12 +26,6 @@ export default class MapScreen extends PureComponent {
     }
   }
 
-  componentDidUpdate(nextProps) {
-    if(nextProps.navigation.getParam('region') !== this.state.region) {
-      // console.log(nextProps.navigation.getParam('region'))
-    }
-  }
-
   onHandlerMarkerShow = async () => {
     await getWeather().then(res => this.response = res);
     await this.setState({ showMarker: true });

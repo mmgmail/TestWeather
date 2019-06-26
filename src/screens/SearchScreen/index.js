@@ -2,28 +2,25 @@ import React, { PureComponent } from 'react';
 import {
   Text,
   View,
-  StyleSheet
+  StyleSheet,
+  ScrollView
 } from 'react-native';
-import {
-  navigation,
-} from 'react-navigation';
-import MapView, { Marker, Callout } from 'react-native-maps';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { Button } from 'react-native-elements';
+import { Api } from 'AppApi';
+const { getWeatherHourly } = Api;
 
-export default class MapScreen extends PureComponent {
+export default class SearchScreen extends PureComponent {
   
   state = {
-    region: {},
+    region: {
+      latitude: 50.4020865,
+      longitude: 30.61468031,
+    }
   };
 
-  componentDidUpdate() {
-    this.getCurrentLocation().then(data => {
-      this.updateLocation({
-        latitude: data.latitude,
-        longitude: data.longitude,
-      });;
-    });
+  async componentDidMount() {
+    await getWeatherHourly().then(res => this.response = res);
+    await console.log(this.response)
   }
 
   getCurrentLocation = () => {
@@ -50,14 +47,7 @@ export default class MapScreen extends PureComponent {
 
   onChangeLocation(region) {
     this.setState({ region });
-    setTimeout(() => {
-      this.props.navigation.navigate('MapTab', {
-        region: {
-          latitude: region.lat,
-          longitude: region.lng,
-        }
-      });
-    }, 10);
+    
   }
 
   render() {
@@ -65,32 +55,28 @@ export default class MapScreen extends PureComponent {
     const banner = navigation.getParam('banner');
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
-          <View style={styles.searchInput}>
-            <GooglePlacesAutocomplete
-              placeholder='Search'
-              minLength={2}
-              autoFocus={false}
-              autoFocus={true}
-              returnKeyType={'search'} 
-              listViewDisplayed={false}
-              fetchDetails={true}
-              onPress={(data, details = null) => {
-                  this.onChangeLocation(details.geometry.location);
-                }
-              }
-              query={{
-                key: 'AIzaSyCpTnZOCTTjid_Rej39OI9FsE2_LcMdPg8',
-                language: 'en',
-                types: '(cities)'
-              }}
-              debounce={200}
-            />
-          </View>
-          <View style={styles.button}>
-            <Button title={'OK'} />
-          </View>
-        </View>
+        <GooglePlacesAutocomplete
+          placeholder='Search'
+          minLength={2}
+          autoFocus={false}
+          autoFocus={true}
+          returnKeyType={'search'} 
+          listViewDisplayed={false}
+          fetchDetails={true}
+          onPress={(data, details = null) => {
+              this.onChangeLocation(details.geometry.location);
+            }
+          }
+          query={{
+            key: 'AIzaSyCpTnZOCTTjid_Rej39OI9FsE2_LcMdPg8',
+            language: 'en',
+            types: '(cities)'
+          }}
+          debounce={200}
+        />
+        <ScrollView>
+
+        </ScrollView>
       </View>
     );
   }
@@ -103,12 +89,5 @@ const styles = StyleSheet.create({
   searchInput: {
     position: 'absolute',
     width: '100%'
-  },
-  button: {
-    width: 50,
-    flexShrink: 0,
-    position: 'absolute',
-    right: 2,
-    top: 2
   }
 });
