@@ -28,7 +28,6 @@ export default class MapScreen extends PureComponent {
     await getWeather().then(res => this.response = res);
     await this.setState({ showMarker: true });
     await setTimeout(() => {
-      console.log(this.response);
       this.marker.showCallout();
     }, 10);
   }

@@ -10,7 +10,6 @@ import {
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { ListItem } from 'react-native-elements'
 import { Api } from 'AppApi';
-
 const { getWeatherHourly, getWeatherHourlyByCoord } = Api;
 
 export default class SearchScreen extends PureComponent {
@@ -78,7 +77,7 @@ export default class SearchScreen extends PureComponent {
           {isLoading ? <ActivityIndicator />
             : <ScrollView>
                 {
-                  responseData.list.map((item, i) => (
+                  responseData !== undefined && responseData.list.map((item, i) => (
                     <ListItem
                       key={item.dt}
                       title={item.dt_txt}

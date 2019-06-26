@@ -28,7 +28,7 @@ export class Api {
   static async getWeatherHourlyByCoord(lat, lon) {
     console.log(`${WEATHER_FORECAST}lat=${lat}&lon=${lon}&${API_KEY}`);
     try {
-      const response = await fetch(`https:api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&${PARAMS}${API_KEY}`);
+      const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&${PARAMS}${API_KEY}`);
       const data = await response.json();
       return data;
     } catch (err) {
