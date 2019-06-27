@@ -4,8 +4,7 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  ActivityIndicator,
-  Alert
+  ActivityIndicator
 } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { ListItem } from 'react-native-elements'
@@ -22,12 +21,8 @@ export default class SearchScreen extends PureComponent {
   async componentDidMount() {
     await getWeatherHourly()
       .then(res => {
-        if(res) {
-          this.setState({ responseData: res });
-          this.setState({ isLoading: false });
-        } else {
-          Alert.alert('Somthing went wrong!');
-        }
+        this.setState({ responseData: res });
+        this.setState({ isLoading: false });
       });
   }
 
@@ -51,12 +46,8 @@ export default class SearchScreen extends PureComponent {
                 await this.setState({ isLoading: true });
                 await getWeatherHourlyByCoord(lat, lon)
                   .then(res => {
-                    if(res) {
-                      this.setState({ responseData: res });
-                      this.setState({ isLoading: false });
-                    } else {
-                      Alert.alert('Somthing went wrong!');
-                    }
+                    this.setState({ responseData: res });
+                    this.setState({ isLoading: false });
                   });
               }
             }

@@ -6,7 +6,7 @@ import {
   Platform,
   Image
 } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
+import MapView, { Marker, Callout } from 'react-native-maps';
 import { Api } from 'AppApi';
 
 const { getWeather } = Api;
@@ -44,7 +44,6 @@ export default class MapScreen extends PureComponent {
     return (
       <View style={{ flex: 1 }}>
         <MapView
-          provider={PROVIDER_GOOGLE}
           style={styles.map}
           initialRegion={{
             latitude,
