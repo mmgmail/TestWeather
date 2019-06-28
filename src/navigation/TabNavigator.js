@@ -4,59 +4,22 @@ import {
 } from 'react-navigation';
 import { MapScreen, SearchScreen } from 'AppScreens';
 
-const MapTab = createStackNavigator({
-  Home: {
-    navigationOptions: {
-      title: 'Map',
-    },
-    params: { banner: 'Map Screen' },
-    path: '/',
-    screen: MapScreen,
-  }
-});
-
-const SearchTab = createStackNavigator({
-  Search: {
-    navigationOptions: {
-      title: 'Search Weather',
-    },
-    params: { banner: 'Search Weather Screen' },
-    screen: SearchScreen,
-  },
-});
-
-const TabNavigator = createBottomTabNavigator(
+const TabNavigator = createStackNavigator(
   {
-    MapTab: {
+    Home: {
       navigationOptions: {
-        tabBarLabel: 'Map',
+        title: 'Map',
       },
+      params: { banner: 'Map Screen' },
       path: '/',
-      screen: MapTab,
+      screen: MapScreen,
     },
-    SearchTab: {
-      screen: SearchTab,
-      path: '/search',
+    Search: {
       navigationOptions: {
-        tabBarLabel: 'Search Weather'
+        title: 'Search Weather',
       },
-    },
-  },
-  {
-    tabBarOptions: {
-      showLabel: true,
-      showIcon: false,
-      activeTintColor: 'white',
-      inactiveTintColor: 'rgba(255,255,255,0.5)',
-      labelStyle: {
-        fontSize: 16
-      },
-      tabStyle: {
-        padding: 15,
-        alignSelf: 'flex-start'
-      },
-      activeBackgroundColor: 'tomato',
-      inactiveBackgroundColor: 'rgba(255,99,71,0.5)',
+      params: { banner: 'Search Weather Screen' },
+      screen: SearchScreen,
     },
   }
 );

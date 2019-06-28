@@ -3,6 +3,7 @@ import {
   Text,
   View,
   StyleSheet,
+  TouchableOpacity,
   Platform,
   Image
 } from 'react-native';
@@ -36,10 +37,15 @@ export default class MapScreen extends PureComponent {
     this.setState({ showMarker: false });
   }
 
+  toSearchWeatgerScreen = () => {
+    this.props.navigation.navigate('Search');
+  }
+
   render() {
     const { navigation } = this.props;
     const { showMarker, region } = this.state;
     const { latitude, longitude } = region;
+    const buttonsGroup = ['Map', 'Search Weather']
     
     return (
       <View style={{ flex: 1 }}>
@@ -68,7 +74,10 @@ export default class MapScreen extends PureComponent {
               <Callout style={styles.plainView}
                 onPress={() => {
                   this.onHandlerMarkerHide()
-                  navigation.navigate('Search')}}
+                  this.props.navigation.navigate('Search', {
+                    city: 'Kyiv'
+                  });
+                }}
               >
                 <View>
                   <Text>{ `${this.response.name}, ${Math.floor(this.response.main.temp)}°C` }</Text>
@@ -78,6 +87,20 @@ export default class MapScreen extends PureComponent {
             </Marker>
           }
         </MapView>
+        <View style={styles.footer}>
+          <TouchableOpacity
+            style={styles.tabButtons}
+            onPress={this.onHandlerMarkerHide}
+          >
+            <Text style={styles.tabButtonsText}>{'Map'}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{opacity: 0.7, ...styles.tabButtons}}
+            onPress={this.toSearchWeatgerScreen}
+          >
+            <Text style={styles.tabButtonsText}>{'Search Weather'}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -104,4 +127,25 @@ const styles = StyleSheet.create({
     width: 'auto',
     padding: 10,
   },
+  footer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  tabButtons: {
+    width: '48%',
+    height: 45,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 22.5,
+    backgroundColor: 'dodgerblue'
+  },
+  tabButtonsText: {
+    fontSize: 16,
+    color: 'white'
+  }
 });
