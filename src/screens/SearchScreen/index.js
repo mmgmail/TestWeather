@@ -1,14 +1,15 @@
 import React, { PureComponent } from 'react';
 import {
-  Text,
   View,
   StyleSheet,
   ScrollView,
   ActivityIndicator,
-  TouchableOpacity
+  TouchableOpacity,
+  SafeAreaView
 } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { ListItem } from 'react-native-elements'
+import { ListItem, Text } from 'react-native-elements'
+import moment from 'moment';
 import { Api } from 'AppApi';
 const { getWeatherHourly, getWeatherHourlyByCoord } = Api;
 
@@ -39,7 +40,7 @@ export default class SearchScreen extends PureComponent {
     const { isLoading, responseData } = this.state;
 
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <GooglePlacesAutocomplete
             placeholder='Search'
@@ -81,9 +82,10 @@ export default class SearchScreen extends PureComponent {
                   responseData !== undefined && responseData.list.map((item, i) => (
                     <ListItem
                       key={item.dt}
-                      title={item.dt_txt}
+                      title={moment(item.dt_txt).format('dddd')}
+                      subtitle={moment(item.dt_txt).format('DD MMM HH:00')}
                       leftAvatar={{ source: { uri: `http://openweathermap.org/img/w/${item.weather[0].icon}.png` } }}
-                      rightElement={<Text>{`${Math.floor(item.main.temp)}°C`}</Text>}
+                      rightElement={<Text h4>{`${Math.floor(item.main.temp)}°C`}</Text>}
                     />
                   ))
                 }
@@ -107,7 +109,7 @@ export default class SearchScreen extends PureComponent {
             <Text style={styles.tabButtonsText}>{'Search Weather'}</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -128,10 +130,11 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   footer: {
-    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingBottom: 5
+    width: '100%',
+    position: 'absolute',
+    bottom: 20
   },
   tabButtons: {
     width: '48%',

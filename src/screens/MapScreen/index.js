@@ -4,8 +4,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  Platform,
-  Image
+  SafeAreaView
 } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { Api } from 'AppApi';
@@ -48,7 +47,7 @@ export default class MapScreen extends PureComponent {
     const buttonsGroup = ['Map', 'Search Weather']
     
     return (
-      <View style={{ flex: 1 }}>
+      <SafeAreaView style={styles.container}>
         <MapView
           style={styles.map}
           initialRegion={{
@@ -101,39 +100,28 @@ export default class MapScreen extends PureComponent {
             <Text style={styles.tabButtonsText}>{'Search Weather'}</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    flex: 1
   },
   map: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    flex: 1
   },
   plainView: {
     width: 'auto',
     padding: 10,
   },
   footer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 5,
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    width: '100%',
+    position: 'absolute',
+    bottom: 20
   },
   tabButtons: {
     width: '48%',
