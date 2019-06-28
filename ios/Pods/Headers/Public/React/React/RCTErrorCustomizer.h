@@ -1,1 +1,1 @@
-../../../../../../node_modules/react-native/React/build/Debug-iphonesimulator/include/React/RCTErrorCustomizer.h
+../../../../../../node_modules/react-native/React/Base/RCTErrorCustomizer.h

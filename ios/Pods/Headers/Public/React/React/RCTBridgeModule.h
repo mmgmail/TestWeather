@@ -1,1 +1,1 @@
-../../../../../../node_modules/react-native/React/build/Debug-iphonesimulator/include/React/RCTBridgeModule.h
+../../../../../../node_modules/react-native/React/Base/RCTBridgeModule.h

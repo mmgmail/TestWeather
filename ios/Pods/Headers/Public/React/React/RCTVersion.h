@@ -1,1 +1,1 @@
-../../../../../../node_modules/react-native/React/build/Debug-iphonesimulator/include/React/RCTVersion.h
+../../../../../../node_modules/react-native/React/Base/RCTVersion.h

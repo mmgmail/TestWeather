@@ -1,1 +1,1 @@
-../../../../../../node_modules/react-native/React/build/Debug-iphonesimulator/include/React/RCTSurfaceRootShadowViewDelegate.h
+../../../../../../node_modules/react-native/React/Base/Surface/RCTSurfaceRootShadowViewDelegate.h

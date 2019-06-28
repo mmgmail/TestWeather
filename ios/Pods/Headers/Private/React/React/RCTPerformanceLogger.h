@@ -1,1 +1,1 @@
-../../../../../../node_modules/react-native/React/build/Debug-iphonesimulator/include/React/RCTPerformanceLogger.h
+../../../../../../node_modules/react-native/React/Base/RCTPerformanceLogger.h

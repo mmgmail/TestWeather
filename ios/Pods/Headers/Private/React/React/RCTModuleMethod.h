@@ -1,1 +1,1 @@
-../../../../../../node_modules/react-native/React/build/Debug-iphonesimulator/include/React/RCTModuleMethod.h
+../../../../../../node_modules/react-native/React/Base/RCTModuleMethod.h

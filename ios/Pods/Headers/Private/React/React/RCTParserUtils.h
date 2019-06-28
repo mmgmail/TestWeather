@@ -1,1 +1,1 @@
-../../../../../../node_modules/react-native/React/build/Debug-iphonesimulator/include/React/RCTParserUtils.h
+../../../../../../node_modules/react-native/React/Base/RCTParserUtils.h

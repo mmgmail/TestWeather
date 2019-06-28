@@ -1,1 +1,1 @@
-../../../../../../node_modules/react-native/React/build/Debug-iphonesimulator/include/React/RCTJavaScriptLoader.h
+../../../../../../node_modules/react-native/React/Base/RCTJavaScriptLoader.h

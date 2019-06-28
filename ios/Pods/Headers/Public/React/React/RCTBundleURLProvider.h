@@ -1,1 +1,1 @@
-../../../../../../node_modules/react-native/React/build/Debug-iphonesimulator/include/React/RCTBundleURLProvider.h
+../../../../../../node_modules/react-native/React/Base/RCTBundleURLProvider.h

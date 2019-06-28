@@ -1,1 +1,1 @@
-../../../../../../node_modules/react-native/React/build/Debug-iphonesimulator/include/React/RCTDisplayLink.h
+../../../../../../node_modules/react-native/React/Base/RCTDisplayLink.h

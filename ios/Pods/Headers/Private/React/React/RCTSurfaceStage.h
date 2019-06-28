@@ -1,1 +1,1 @@
-../../../../../../node_modules/react-native/React/build/Debug-iphonesimulator/include/React/RCTSurfaceStage.h
+../../../../../../node_modules/react-native/React/Base/Surface/RCTSurfaceStage.h

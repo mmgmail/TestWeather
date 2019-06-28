@@ -1,1 +1,1 @@
-../../../../../../node_modules/react-native/React/build/Debug-iphonesimulator/include/React/RCTPlatform.h
+../../../../../../node_modules/react-native/React/Base/RCTPlatform.h

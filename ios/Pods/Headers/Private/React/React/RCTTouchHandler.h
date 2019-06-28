@@ -1,1 +1,1 @@
-../../../../../../node_modules/react-native/React/build/Debug-iphonesimulator/include/React/RCTTouchHandler.h
+../../../../../../node_modules/react-native/React/Base/RCTTouchHandler.h
