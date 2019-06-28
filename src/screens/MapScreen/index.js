@@ -19,7 +19,7 @@ export default class MapScreen extends PureComponent {
       showMarker: false,
       region: {
         latitude: 50.4020865,
-        longitude: 30.61468031,
+        longitude: 30.61468031
       }
     }
   }
@@ -44,20 +44,19 @@ export default class MapScreen extends PureComponent {
     const { navigation } = this.props;
     const { showMarker, region } = this.state;
     const { latitude, longitude } = region;
-    const buttonsGroup = ['Map', 'Search Weather']
     
     return (
       <SafeAreaView style={styles.container}>
         <MapView
           style={styles.map}
-          initialRegion={{
+          region={{
             latitude,
             longitude,
             latitudeDelta: 1,
             longitudeDelta: 1,
           }}
           onLongPress={this.onHandlerMarkerShow}
-          onPress={this.onHandlerMarkerHide}
+          ref={ref => this.map = ref}
         >
           {!!showMarker && 
             <Marker
@@ -73,7 +72,7 @@ export default class MapScreen extends PureComponent {
               <Callout style={styles.plainView}
                 onPress={() => {
                   this.onHandlerMarkerHide()
-                  this.props.navigation.navigate('Search', {
+                  navigation.navigate('Search', {
                     city: 'Kyiv'
                   });
                 }}
