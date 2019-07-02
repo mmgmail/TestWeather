@@ -27,15 +27,10 @@ class SearchScreen extends PureComponent {
     }
   }
   
-  async componentDidMount() {
-    const city = await this.props.navigation.getParam('city', false);
+  componentDidMount() {
+    const city = this.props.navigation.getParam('city', false);
     if(city) {
-      await this.setState({ isLoading: true });
-      await getWeatherHourly(city)
-        .then(res => {
-          this.setState({ responseData: res });
-          this.setState({ isLoading: false });
-      });
+      return this.props.loadWeatherHourly(city);
     }
   }
 
@@ -44,8 +39,7 @@ class SearchScreen extends PureComponent {
   }
 
   render() {
-    const { isLoading } = this.state;
-    const { coordWeather } = this.props;
+    const { coordWeather, isLoading } = this.props;
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
@@ -170,12 +164,13 @@ SearchScreen.propTypes = {
 const mapStateToProps = (state, nextState) => {
   return {
     coordWeather: state.weather.coordWeather,
-    // isLoading: state.isLoading
+    isLoading: state.weather.isLoading
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    loadWeatherHourly: (city) => dispatch(loadWeatherHourly(city)),
     loadWeatherByCoord: (lat, lon) => dispatch(loadWeatherByCoord(lat, lon))
   }
 }

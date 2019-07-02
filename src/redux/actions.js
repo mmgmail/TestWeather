@@ -12,7 +12,7 @@ const loadWeatherToday = () => (dispatch, getState) => {
 
 const loadWeatherHourly = (city) => (dispatch, getState) => {
 	dispatch({ type: 'LOADING' })
-	getWeatherHourly().then(res => {
+	getWeatherHourly(city).then(res => {
 		dispatch({ type: 'GET_WEATHER_HOURLY_SUCCESS', payload: res })
 	}).catch(function (error) {
 		dispatch({ type: 'GET_WEATHER_HOURLY_FAILURE', payload: error })

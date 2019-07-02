@@ -23,7 +23,7 @@ const weather = (state = {}, action) => {
 		case 'GET_WEATHER_HOURLY_SUCCESS':
 			return {
 				...state,
-				hourlyyWeather: action.payload,
+				coordWeather: action.payload,
 				isLoading: false
 			}
 		case 'GET_WEATHER_BYCOORD_SUCCESS':
