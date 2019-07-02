@@ -13,7 +13,7 @@ export class Api {
     return await response.json();
   }
 
-  static async getWeatherHourly(city = 'Kyiv') {
+  static async getWeatherHourly(city) {
     const response = await fetch(`${WEATHER_FORECAST}${city}${PARAMS}${API_KEY}`);
     if (!response.ok) {
       throw new Error(response.status)

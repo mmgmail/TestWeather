@@ -7,11 +7,10 @@ import {
   SafeAreaView
 } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
-import { Api } from 'AppApi';
+import { connect } from 'react-redux';
+import { loadWeatherToday } from 'AppRedux';
 
-const { getWeather } = Api;
-
-export default class MapScreen extends PureComponent {
+class MapScreen extends PureComponent {
   
   constructor(props) {
     super(props);
@@ -25,7 +24,6 @@ export default class MapScreen extends PureComponent {
   }
 
   onHandlerMarkerShow = async () => {
-    await getWeather().then(res => this.response = res);
     await this.setState({ showMarker: true });
     await setTimeout(() => {
       this.marker.showCallout();
@@ -41,7 +39,7 @@ export default class MapScreen extends PureComponent {
   }
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, response } = this.props;
     const { showMarker, region } = this.state;
     const { latitude, longitude } = region;
     
@@ -78,8 +76,8 @@ export default class MapScreen extends PureComponent {
                 }}
               >
                 <View>
-                  <Text>{ `${this.response.name}, ${Math.floor(this.response.main.temp)}°C` }</Text>
-                  <Text>{ this.response.weather[0].description }</Text>
+                  <Text>{ `${response.name}, ${Math.floor(response.main.temp)}°C` }</Text>
+                  <Text>{ response.weather[0].description }</Text>
                 </View>
               </Callout>
             </Marker>
@@ -136,3 +134,18 @@ const styles = StyleSheet.create({
     color: 'white'
   }
 });
+
+const mapStateToProps = (state) => {
+  console.log(state)
+  return {
+    response: state.weather.todayWeather
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadWeatherToday: dispatch(loadWeatherToday())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MapScreen);
