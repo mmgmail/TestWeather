@@ -1,5 +1,6 @@
 export { 
   loadWeatherToday,
 	loadWeatherHourly,
-	loadWeatherByCoord
+	loadWeatherByCoord,
+	resetParams
 } from './actions';

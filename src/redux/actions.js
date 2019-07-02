@@ -23,15 +23,22 @@ const loadWeatherByCoord = (lat, lon) => {
 	return (dispatch, getState) => {
 		dispatch({ type: 'LOADING' })
 		getWeatherHourlyByCoord(lat, lon).then(res => {
-			return dispatch({ type: 'GET_WEATHER_BYCOORD_SUCCESS', payload: res })
+			dispatch({ type: 'GET_WEATHER_BYCOORD_SUCCESS', payload: res })
 		}).catch(function (error) {
-			return dispatch({ type: 'GET_WEATHER_BYCOORD_FAILURE', payload: error })
+			dispatch({ type: 'GET_WEATHER_BYCOORD_FAILURE', payload: error })
 		})
+	}
+}
+
+const resetParams = () => {
+	return (dispatch) => {
+		dispatch({ type: 'RESET_PARAMS', payload: null })
 	}
 }
 
 export {
 	loadWeatherToday,
 	loadWeatherHourly,
-	loadWeatherByCoord
+	loadWeatherByCoord,
+	resetParams
 }

@@ -1,11 +1,3 @@
-
-const initialState = {
-	isLoading: false,
-	todayWeather: {},
-	hourlyyWeather: {},
-	coordWeather: {}
-}
-
 const weather = (state = {}, action) => {
 	switch (action.type) {
 		case 'LOADING': {
@@ -27,6 +19,12 @@ const weather = (state = {}, action) => {
 				isLoading: false
 			}
 		case 'GET_WEATHER_BYCOORD_SUCCESS':
+			return {
+				...state,
+				coordWeather: action.payload,
+				isLoading: false
+			}
+		case 'RESET_PARAMS':
 			return {
 				...state,
 				coordWeather: action.payload,

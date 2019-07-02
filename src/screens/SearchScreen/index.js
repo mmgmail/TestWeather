@@ -13,7 +13,7 @@ import { ListItem, Text } from 'react-native-elements'
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { Api } from 'AppApi';
-import { loadWeatherHourly, loadWeatherByCoord } from 'AppRedux';
+import { loadWeatherHourly, loadWeatherByCoord, resetParams } from 'AppRedux';
 
 const { getWeatherHourly } = Api;
 
@@ -31,6 +31,8 @@ class SearchScreen extends PureComponent {
     const city = this.props.navigation.getParam('city', false);
     if(city) {
       return this.props.loadWeatherHourly(city);
+    } else {
+      return this.props.resetParams();
     }
   }
 
@@ -171,7 +173,8 @@ const mapStateToProps = (state, nextState) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loadWeatherHourly: (city) => dispatch(loadWeatherHourly(city)),
-    loadWeatherByCoord: (lat, lon) => dispatch(loadWeatherByCoord(lat, lon))
+    loadWeatherByCoord: (lat, lon) => dispatch(loadWeatherByCoord(lat, lon)),
+    resetParams: () => dispatch(resetParams())
   }
 }
 
