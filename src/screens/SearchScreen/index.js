@@ -7,19 +7,26 @@ import {
   TouchableOpacity,
   SafeAreaView
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { ListItem, Text } from 'react-native-elements'
 import moment from 'moment';
+import { connect } from 'react-redux';
 import { Api } from 'AppApi';
-const { getWeatherHourly, getWeatherHourlyByCoord } = Api;
+import { loadWeatherHourly, loadWeatherByCoord } from 'AppRedux';
 
-export default class SearchScreen extends PureComponent {
+const { getWeatherHourly } = Api;
+
+class SearchScreen extends PureComponent {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+      responseData: null
+    }
+  }
   
-  state = {
-    isLoading: false,
-    responseData: null
-  };
-
   async componentDidMount() {
     const city = await this.props.navigation.getParam('city', false);
     if(city) {
@@ -37,8 +44,8 @@ export default class SearchScreen extends PureComponent {
   }
 
   render() {
-    const { isLoading, responseData } = this.state;
-
+    const { isLoading } = this.state;
+    const { coordWeather } = this.props;
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
@@ -50,15 +57,10 @@ export default class SearchScreen extends PureComponent {
             listViewDisplayed={false}
             fetchDetails={true}
             getDefaultValue={() => this.props.navigation.getParam('city', '')}
-            onPress={async (data, details = null) => {
+            onPress={(data, details = null) => {
                 const lat = Math.floor(details.geometry.location.lat);
-                const lon = Math.floor(details.geometry.location.lng);
-                await this.setState({ isLoading: true });
-                await getWeatherHourlyByCoord(lat, lon)
-                  .then(res => {
-                    this.setState({ responseData: res });
-                    this.setState({ isLoading: false });
-                  });
+                const lon = Math.floor(details.geometry.location.lng); 
+                return this.props.loadWeatherByCoord(lat, lon);
               }
             }
             query={{
@@ -76,10 +78,10 @@ export default class SearchScreen extends PureComponent {
         </View>
         <View style={styles.list}>
           {isLoading ? <ActivityIndicator />
-            : responseData
+            : coordWeather
             ? <ScrollView>
                 {
-                  responseData !== undefined && responseData.list.map((item, i) => (
+                  coordWeather !== undefined && coordWeather.list.map((item, i) => (
                     <ListItem
                       key={item.dt}
                       title={moment(item.dt_txt).format('dddd')}
@@ -160,3 +162,22 @@ const styles = StyleSheet.create({
     color: 'lightgrey'
   }
 });
+
+SearchScreen.propTypes = {
+  loadWeatherByCoord: PropTypes.func.isRequired
+}
+
+const mapStateToProps = (state, nextState) => {
+  return {
+    coordWeather: state.weather.coordWeather,
+    // isLoading: state.isLoading
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadWeatherByCoord: (lat, lon) => dispatch(loadWeatherByCoord(lat, lon))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchScreen);

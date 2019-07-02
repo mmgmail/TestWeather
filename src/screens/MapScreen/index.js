@@ -14,6 +14,7 @@ class MapScreen extends PureComponent {
   
   constructor(props) {
     super(props);
+    
     this.state = {
       showMarker: false,
       region: {
@@ -136,7 +137,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     response: state.weather.todayWeather
   }
