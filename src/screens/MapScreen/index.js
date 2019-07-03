@@ -25,6 +25,7 @@ class MapScreen extends PureComponent {
   }
 
   onHandlerMarkerShow = async () => {
+    await this.props.loadWeatherToday()
     await this.setState({ showMarker: true });
     await setTimeout(() => {
       this.marker.showCallout();
@@ -40,7 +41,7 @@ class MapScreen extends PureComponent {
   }
 
   render() {
-    const { navigation, response } = this.props;
+    const { navigation, response, error } = this.props;
     const { showMarker, region } = this.state;
     const { latitude, longitude } = region;
     
@@ -76,10 +77,16 @@ class MapScreen extends PureComponent {
                   });
                 }}
               >
-                <View>
-                  <Text>{ `${response.name}, ${Math.floor(response.main.temp)}°C` }</Text>
-                  <Text>{ response.weather[0].description }</Text>
-                </View>
+               {response !== undefined && response ? 
+                  <View>
+                    <Text>{ `${response.name}, ${Math.floor(response.main.temp)}°C` }</Text>
+                    <Text>{ response.weather[0].description }</Text>
+                  </View>
+                : error ? 
+                  <View>
+                    <Text style={{ color: 'red' }}>{`Thomething went wrong!\n${error}`}</Text>
+                  </View> : <View />
+               } 
               </Callout>
             </Marker>
           }
@@ -138,13 +145,14 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    response: state.weather.todayWeather
+    response: state.weather.todayWeather,
+    error: state.weather.error
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadWeatherToday: dispatch(loadWeatherToday())
+    loadWeatherToday: () => dispatch(loadWeatherToday())
   }
 }
 

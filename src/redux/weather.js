@@ -12,18 +12,33 @@ const weather = (state = {}, action) => {
 				todayWeather: action.payload,
 				isLoading: false
 			}
+		case 'GET_WEATHER_TODAY_FAILURE': {
+			return {
+				error: action.payload
+			}
+		}
 		case 'GET_WEATHER_HOURLY_SUCCESS':
 			return {
 				...state,
 				coordWeather: action.payload,
 				isLoading: false
 			}
+		case 'GET_WEATHER_HOURLY_FAILURE': {
+			return {
+				error: action.payload
+			}
+		}
 		case 'GET_WEATHER_BYCOORD_SUCCESS':
 			return {
 				...state,
 				coordWeather: action.payload,
 				isLoading: false
 			}
+		case 'GET_WEATHER_BYCOORD_FAILURE': {
+			return {
+				error: action.payload
+			}
+		}
 		case 'RESET_PARAMS':
 			return {
 				...state,

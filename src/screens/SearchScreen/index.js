@@ -39,7 +39,7 @@ class SearchScreen extends PureComponent {
   }
 
   render() {
-    const { coordWeather, isLoading } = this.props;
+    const { coordWeather, isLoading, error } = this.props;
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
@@ -80,15 +80,19 @@ class SearchScreen extends PureComponent {
                       key={item.dt}
                       title={moment(item.dt_txt).format('dddd')}
                       subtitle={moment(item.dt_txt).format('DD MMM HH:00')}
-                      leftAvatar={{ source: { uri: `http://openweathermap.org/img/w/${item.weather[0].icon}.png` } }}
+                      leftAvatar={{ source: { uri: `https://openweathermap.org/img/w/${item.weather[0].icon}.png` } }}
                       rightElement={<Text h4>{`${Math.floor(item.main.temp)}°C`}</Text>}
                     />
                   ))
                 }
               </ScrollView>
-              : <View style={styles.centered}>
-                  <Text style={styles.infoText}>{'Enter city for search weather'}</Text>
-                </View>
+            : error
+            ? <View style={styles.centered}>
+                <Text style={{...styles.infoText, color: 'red'}}>{`Sorry, something went wrong!\n${error}`}</Text>
+              </View>
+            : <View style={styles.centered}>
+                <Text style={styles.infoText}>{'Enter city for search weather'}</Text>
+              </View>
           }
         </View>
         <View style={styles.footer}>
@@ -153,7 +157,8 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 20,
-    color: 'lightgrey'
+    color: 'lightgrey',
+    textAlign: 'center'
   }
 });
 
@@ -164,7 +169,8 @@ SearchScreen.propTypes = {
 const mapStateToProps = (state, nextState) => {
   return {
     coordWeather: state.weather.coordWeather,
-    isLoading: state.weather.isLoading
+    isLoading: state.weather.isLoading,
+    error: state.weather.error
   }
 }
 
