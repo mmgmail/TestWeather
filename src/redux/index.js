@@ -1,5 +1,5 @@
 export { 
-  loadWeatherToday,
+  	loadWeatherToday,
 	loadWeatherHourly,
 	loadWeatherByCoord,
 	resetParams
