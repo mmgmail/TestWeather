@@ -19,10 +19,6 @@ class SearchScreen extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = {
-      isLoading: false,
-      responseData: null
-    }
   }
   
   componentDidMount() {

@@ -4,7 +4,8 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
+  ActivityIndicator
 } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { connect } from 'react-redux';
@@ -41,7 +42,7 @@ class MapScreen extends PureComponent {
   }
 
   render() {
-    const { navigation, response, error } = this.props;
+    const { navigation, response, error, isLoading } = this.props;
     const { showMarker, region } = this.state;
     const { latitude, longitude } = region;
     
@@ -77,15 +78,17 @@ class MapScreen extends PureComponent {
                   });
                 }}
               >
-               {response !== undefined && response ? 
-                  <View>
-                    <Text>{ `${response.name}, ${Math.floor(response.main.temp)}°C` }</Text>
-                    <Text>{ response.weather[0].description }</Text>
-                  </View>
+               {isLoading 
+                ? <ActivityIndicator />
+                : response !== undefined && response ? 
+                    <View>
+                      <Text>{ `${response.name}, ${Math.floor(response.main.temp)}°C` }</Text>
+                      <Text>{ response.weather[0].description }</Text>
+                    </View>
                 : error ? 
-                  <View>
-                    <Text style={{ color: 'red' }}>{`Thomething went wrong!\n${error}`}</Text>
-                  </View> : <View />
+                    <View>
+                      <Text style={{ color: 'red' }}>{`Thomething went wrong!\n${error}`}</Text>
+                    </View> : <View />
                } 
               </Callout>
             </Marker>
@@ -146,6 +149,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     response: state.weather.todayWeather,
+    isLoading: state.weather.isLoading,
     error: state.weather.error
   }
 }
