@@ -25,10 +25,9 @@ class MapScreen extends PureComponent {
     }
   }
 
-  onHandlerMarkerShow = async () => {
-    await this.props.loadWeatherToday()
-    await this.setState({ showMarker: true });
-    await setTimeout(() => {
+  onHandlerMarkerShow = () => {
+    this.setState({ showMarker: true });
+    setTimeout(() => {
       this.marker.showCallout();
     }, 10);
   }
@@ -79,8 +78,8 @@ class MapScreen extends PureComponent {
                 }}
               >
                {isLoading 
-                ? <ActivityIndicator />
-                : response !== undefined && response ? 
+                ? <ActivityIndicator color={'black'} />
+                : response ? 
                     <View>
                       <Text>{ `${response.name}, ${Math.floor(response.main.temp)}°C` }</Text>
                       <Text>{ response.weather[0].description }</Text>
@@ -156,7 +155,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadWeatherToday: () => dispatch(loadWeatherToday())
+    loadWeatherToday: dispatch(loadWeatherToday())
   }
 }
 
