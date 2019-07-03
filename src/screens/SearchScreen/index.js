@@ -15,8 +15,6 @@ import { connect } from 'react-redux';
 import { Api } from 'AppApi';
 import { loadWeatherHourly, loadWeatherByCoord, resetParams } from 'AppRedux';
 
-const { getWeatherHourly } = Api;
-
 class SearchScreen extends PureComponent {
 
   constructor(props) {
